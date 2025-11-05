@@ -1,6 +1,3 @@
-// Take the `people` array and create an array called `youngPeople` that stores objects with ONLY `name` and `email` 
-// properties of all the people that are 25 and under. The `name` property should have their first and last name.
-
 // Challenge 1
 const people = [
   {
@@ -40,35 +37,5 @@ const people = [
   },
 ];
 
-const youngPeople1 = people
-  .filter((person) => person.age <= 25)
-  .map((person) => ({
-    name: person.firstName + ' ' + person.lastName,
-    email: person.email
-
-  }))
-
-console.log(youngPeople1)
-
-// const youngPeople = people.map((peoples) => {
-//   return {
-//     name: peoples.firstName,
-//     email: peoples.email
-//   }
-// })
-// console.log(youngPeople)
-
 // Challenge 2
 const numbers = [2, -30, 50, 20, -12, -9, 7];
-
-const filterNum = numbers.filter((number) => number > 0)
-  .reduce((acc, cur) => acc + cur, 0);
-
-console.log(filterNum)
-
-// Create a new array called `capitalizedWords` with the words from the `words` 
-// array with the first letter of each word capitalized.
-const words = ['coder', 'programmer', 'developer'];
-const capitalizedWords = words.map((word) => word[0].toUpperCase() + word.slice(1, word.length))
-
-console.log(capitalizedWords)

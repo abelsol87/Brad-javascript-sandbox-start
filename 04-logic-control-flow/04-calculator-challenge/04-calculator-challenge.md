@@ -1,4 +1,4 @@
-fu# Calculator Challenge
+# Calculator Challenge
 
 **Instructions:**
 
