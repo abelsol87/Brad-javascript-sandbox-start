@@ -48,14 +48,11 @@ function createIcon(classes) {
 
 function removeItem(e) {
     if (e.target.parentElement.classList.contains('remove-item')) {
-        e.target.parentElement.parentElement.remove()
-        console.log('click')
-    }
-}
 
-function clearItems() {
-    while (itemList.firstChild) {
-        itemList.removeChild(itemList.firstChild)
+        if (confirm('Are You sure?')) {
+            e.target.parentElement.parentElement.remove()
+        }
+        checkUi()
     }
 }
 
@@ -68,6 +65,13 @@ function checkUi() {
         clearButton.style.display = 'block'
         clearButton.style.display = 'block'
     }
+}
+
+function clearItems() {
+    while (itemList.firstChild) {
+        itemList.removeChild(itemList.firstChild)
+    }
+    checkUi()
 }
 
 // Event listeners
