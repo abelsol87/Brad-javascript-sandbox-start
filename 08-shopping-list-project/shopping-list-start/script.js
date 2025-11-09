@@ -5,7 +5,7 @@ const clearButton = document.getElementById('clear')
 const itemFilter = document.getElementById('filter')
 const items = itemList.querySelectorAll('li')
 
-console.log(itemForm, itemInput, itemList, clearButton)
+console.log(itemForm, itemInput, itemList, clearButton, itemFilter)
 
 function addItem(e) {
     e.preventDefault();
@@ -56,8 +56,24 @@ function removeItem(e) {
     }
 }
 
+function filterItem(e) {
+    const items = itemList.querySelectorAll('li')
+    const text = e.target.value.toLowerCase()
+
+    items.forEach(item => {
+        const itemName = item.firstChild.textContent.toLowerCase()
+
+        if (itemName.indexOf(text) != -1) {
+            item.style.display = 'flex'
+        } else {
+            item.style.display = 'none'
+        }
+    })
+}
+
 function checkUi() {
     const items = itemList.querySelectorAll('li')
+
     if (items.length === 0) {
         clearButton.style.display = 'none'
         itemFilter.style.display = 'none'
@@ -78,6 +94,6 @@ function clearItems() {
 itemForm.addEventListener('submit', addItem)
 itemList.addEventListener('click', removeItem)
 clearButton.addEventListener('click', clearItems)
-
+itemFilter.addEventListener('input', filterItem)
 
 checkUi()
