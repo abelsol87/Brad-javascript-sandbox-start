@@ -7,6 +7,12 @@ const items = itemList.querySelectorAll('li')
 
 console.log(itemForm, itemInput, itemList, clearButton, itemFilter)
 
+function displayItems() {
+    const itemsFromStorage = getItemFromStorage()
+    itemsFromStorage.forEach(item => addItemToDOM(item))
+    checkUi()
+}
+
 function onAddItemSubmit(e) {
     e.preventDefault();
     const newItem = itemInput.value
@@ -37,21 +43,6 @@ function addItemToDOM(item) {
     itemList.appendChild(li)
 }
 
-function addItemToStorage(item) {
-    let itemsFromStorage;
-
-    if (localStorage.getItem('items') === null) {
-        itemsFromStorage = []
-    } else {
-        itemsFromStorage = JSON.parse(localStorage.getItem('items'))
-    }
-    // Add new item to array  
-    itemsFromStorage.push(item)
-
-    // Convert to JSON string and set to local storage
-    localStorage.setItem('items', JSON.stringify(itemsFromStorage))
-}
-
 function createButton(classes) {
     const button = document.createElement('button')
     button.className = classes;
@@ -65,6 +56,28 @@ function createIcon(classes) {
     const icon = document.createElement('i')
     icon.className = classes;
     return icon
+}
+
+function addItemToStorage(item) {
+    const itemsFromStorage = getItemFromStorage()
+
+
+    // Add new item to array  
+    itemsFromStorage.push(item)
+
+    // Convert to JSON string and set to local storage
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage))
+}
+
+function getItemFromStorage() {
+    let itemsFromStorage;
+
+    if (localStorage.getItem('items') === null) {
+        itemsFromStorage = []
+    } else {
+        itemsFromStorage = JSON.parse(localStorage.getItem('items'))
+    }
+    return itemsFromStorage
 }
 
 function removeItem(e) {
@@ -111,13 +124,20 @@ function clearItems() {
     checkUi()
 }
 
-// Event listeners
-itemForm.addEventListener('submit', onAddItemSubmit)
-itemList.addEventListener('click', removeItem)
-clearButton.addEventListener('click', clearItems)
-itemFilter.addEventListener('input', filterItem)
+// Initialize app
+function init() {
 
-checkUi()
+    // Event listeners
+    itemForm.addEventListener('submit', onAddItemSubmit)
+    itemList.addEventListener('click', removeItem)
+    clearButton.addEventListener('click', clearItems)
+    itemFilter.addEventListener('input', filterItem)
+    document.addEventListener('DOMContentLoaded', displayItems)
+
+    checkUi()
+}
+
+init()
 
 // localStorage.setItem('Name', 'Abel')
 // console.log(localStorage.getItem('Name'))
