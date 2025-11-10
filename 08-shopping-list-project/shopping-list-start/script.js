@@ -7,28 +7,49 @@ const items = itemList.querySelectorAll('li')
 
 console.log(itemForm, itemInput, itemList, clearButton, itemFilter)
 
-function addItem(e) {
+function onAddItemSubmit(e) {
     e.preventDefault();
-
     const newItem = itemInput.value
     // Validate input
     if (newItem === '') {
         alert("Please add an item");
         return;
     }
+    // Crate item DOM element
+    addItemToDOM(newItem)
+
+    // Add item to local storage
+    addItemToStorage(newItem)
+    checkUi()
+
+    itemInput.value = ''
+}
+
+function addItemToDOM(item) {
     // Create List item
     const li = document.createElement('li')
-    li.appendChild(document.createTextNode(newItem))
+    li.appendChild(document.createTextNode(item))
 
     const button = createButton('remove-item btn-link text-red')
     li.appendChild(button)
 
     // Add li to the DOM
     itemList.appendChild(li)
-    checkUi()
+}
 
-    itemInput.value = ''
+function addItemToStorage(item) {
+    let itemsFromStorage;
 
+    if (localStorage.getItem('items') === null) {
+        itemsFromStorage = []
+    } else {
+        itemsFromStorage = JSON.parse(localStorage.getItem('items'))
+    }
+    // Add new item to array  
+    itemsFromStorage.push(item)
+
+    // Convert to JSON string and set to local storage
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage))
 }
 
 function createButton(classes) {
@@ -91,9 +112,13 @@ function clearItems() {
 }
 
 // Event listeners
-itemForm.addEventListener('submit', addItem)
+itemForm.addEventListener('submit', onAddItemSubmit)
 itemList.addEventListener('click', removeItem)
 clearButton.addEventListener('click', clearItems)
 itemFilter.addEventListener('input', filterItem)
 
 checkUi()
+
+// localStorage.setItem('Name', 'Abel')
+// console.log(localStorage.getItem('Name'))
+// localStorage.removeItem('Name')
